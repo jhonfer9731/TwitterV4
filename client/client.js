@@ -4,7 +4,7 @@ const form = document.querySelector('form');// toma toda la informacion del form
 const loadingElement = document.querySelector('.loading');
 const twittsElement = document.querySelector('.twitters');
 
-const API_URL = 'http://localhost:5000/mews';
+const API_URL = window.location.hostname === 'localhost' ? 'http://localhost:5000/mews': 'https://twitter-app-jhon.herokuapp.com/mews';
 
 
 

@@ -24,7 +24,7 @@ res.json({
 });
 
 });
-
+app.use(cors()); // this line adds the cors headers to avoid errors
 // mostras anteriores twitters cuando se ejecute /mews
 app.get('/mews',(req,res) => { 
     twitters
@@ -48,6 +48,8 @@ app.use(ratelimit({ // Establecer un limite de request
 
 // Create a route that is waiting for the incoming data
 // when the server receives a POST request on  /mews
+
+app.use(cors()); // this line adds the cors headers to avoid errors
 app.post('/mews', (req,res) =>{
 
     if (isValidMew(req.body))

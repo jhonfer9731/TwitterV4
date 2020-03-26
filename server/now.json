@@ -1,7 +1,23 @@
 {
     "version": 2,
-    "builds": [{"src":"./index.js", "use": "@now/node-server@0.4.26"}],
-    "routes": [{"src": "/mews", "dest": "/"}]
+    "builds": [{"src":"index.js", "use": "@now/node-server"}],
+    "routes": [
+        {
+            "src": "/mews", 
+            "dest": "index.js",
+            "methods": ["GET"]
+        },
+        {
+            "src": "/mews", 
+            "dest": "index.js",
+            "methods": ["POST"]
+        },
+        {
+            "src": "/", 
+            "dest": "/index.js",
+            "methods": ["GET"]
+        }
+    ]
 }
 
 
