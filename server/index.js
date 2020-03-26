@@ -4,7 +4,7 @@ const cors = require('cors');
 const monk = require('monk'); // library of mongoDB 
 const ratelimit = require("express-rate-limit");
 const URI = "mongodb+srv://jhonfer9731:12952762j.@mifirstdb-ebgch.gcp.mongodb.net/test?retryWrites=true&w=majority";
-
+const PORT = process.env.PORT || 5000;
 
 
 const app = express(); // application
@@ -74,7 +74,7 @@ app.post('/mews', (req,res) =>{
     }
 });
 
-app.listen(5000, ()=>{// servidor escuchando por el puerto 5000
+app.listen(PORT, ()=>{// servidor escuchando por el puerto 5000
     console.log('Listening on http://localhost:5000');
 });
 
