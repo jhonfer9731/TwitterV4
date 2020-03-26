@@ -1,0 +1,9 @@
+{
+    "version": 2,
+    "builds": [{"src":"./index.js", "use": "@now/node-server@0.4.26"}],
+    "routes": [{"src": "/mews", "dest": "/"}]
+}
+
+
+
+
