@@ -5,16 +5,26 @@ const monk = require('monk'); // library of mongoDB
 const ratelimit = require("express-rate-limit");
 const URI = "mongodb+srv://jhonfer9731:12952762j.@mifirstdb-ebgch.gcp.mongodb.net/test?retryWrites=true&w=majority";
 const PORT = process.env.PORT || 5000;
-
-
 const app = express(); // application
 // Cuando se presiona enter a cualquier pagina web, se ejecuta un get request
 const db = monk(URI);
 //const db = monk(process.env.MONGO_URI || 'localhost/twitterDB');// connect to the mongo DB
 const twitters = db.get('twitters'); //creating a collection
 
-app.use(cors()); // this line adds the cors headers to avoid errors
+
+app.use(function(req, res, next) {
+    res.header('Access-Control-Allow-Origin', 'https://front-end-twit.jhonfer9731.now.sh');
+    res.header('Access-Control-Allow-Methods','GET,PUT,POST,DELETE');
+    res.header('Access-Control-Allow-Headers','Content-Type');
+    next();
+  });
+
+//app.use(cors()); // this line adds the cors headers to avoid errors
 app.use(express.json());// let the server process incoming JSON files
+
+
+
+
 
 
 app.get('/',(req, res) => { // Request and response of the Dynamic server
@@ -22,9 +32,9 @@ app.get('/',(req, res) => { // Request and response of the Dynamic server
 res.json({
     message: 'Response to your Request :333'
 });
-
 });
-app.use(cors()); // this line adds the cors headers to avoid errors
+
+
 // mostras anteriores twitters cuando se ejecute /mews
 app.get('/mews',(req,res) => { 
     twitters
@@ -33,25 +43,19 @@ app.get('/mews',(req,res) => {
             res.json(twitters);// cuando se ejecuta /mews el va a la DB y responde toda la coleccion de twitters
         });
 });
-
 function isValidMew(twitt) // verificar si lo que se recibio tiene informacion
 {
     return twitt.name && twitt.name.toString().trim() !== '' &&
      twitt.content && twitt.content.toString().trim() !== '';
 }
-
-
 app.use(ratelimit({ // Establecer un limite de request 
     windowMs: 30*1000,
-    max: 1
+    max: 6
 }));
-
 // Create a route that is waiting for the incoming data
 // when the server receives a POST request on  /mews
-
-app.use(cors()); // this line adds the cors headers to avoid errors
+//app.use(cors()); // this line adds the cors headers to avoid errors
 app.post('/mews', (req,res) =>{
-
     if (isValidMew(req.body))
     {
         //insert into db..
@@ -66,8 +70,6 @@ app.post('/mews', (req,res) =>{
             .then(createdTwitt =>{
                 res.json(createdTwitt);// response to the client that was created
             });
-
-
     }else{
         res.status(422);
         res.json({
@@ -75,9 +77,7 @@ app.post('/mews', (req,res) =>{
         });
     }
 });
-
 app.listen(PORT, ()=>{// servidor escuchando por el puerto 5000
     console.log('Listening on http://localhost:5000');
 });
-
 // a comment

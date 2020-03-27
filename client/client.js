@@ -46,7 +46,7 @@ form.addEventListener('submit', (event) => { // listener for the submit
     form.reset();
     setTimeout(() => {
         form.style.display  = '';
-    }, 10000);
+    }, 10000/2);
     loadingElement.style.display = 'none';
       });
 
